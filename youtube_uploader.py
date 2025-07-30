@@ -166,16 +166,16 @@ def main():
 
         # --- YouTube metadata (Find the Italian Brainrot Content) ---
         youtube_titles = [
-            "Find the Italian Brainrot: Can You See It? 🧠",
-            "Where's the Italian Brainrot? (Challenge Edition)",
-            "Spot the Italian Brainrot: Extreme Edition!",
-            "I Found the Italian Brainrot... And It's Wild!",
-            "Can YOU Find the Italian Brainrot in This Video?",
-            "Hidden Italian Brainrot: A Visual Hunt!",
-            "The Great Italian Brainrot Search!",
-            "Find the Italian Brainrot: Impossible Difficulty!",
-            "Join Me to Find the Italian Brainrot!",
-            "Find the Italian Brainrot: My Mind is Melting!"
+            "Find the Italian Brainrot: Can You See It? 🧠  #김프로 #유백합",
+            "Where's the Italian Brainrot? (Challenge Edition)  #김프로 #유백합",
+            "Spot the Italian Brainrot: Extreme Edition!  #김프로 #유백합",
+            "I Found the Italian Brainrot... And It's Wild!  #김프로 #유백합",
+            "Can YOU Find the Italian Brainrot in This Video?  #김프로 #유백합",
+            "Hidden Italian Brainrot: A Visual Hunt! #김프로 #유백합",
+            "The Great Italian Brainrot Search! #김프로 #유백합",
+            "Find the Italian Brainrot: Impossible Difficulty! #김프로 #유백합",
+            "Join Me to Find the Italian Brainrot! #김프로 #유백합",
+            "Find the Italian Brainrot: My Mind is Melting! #김프로 #유백합"
         ]
 
         youtube_title = random.choice(youtube_titles)
