@@ -166,7 +166,7 @@ def main():
 
         # --- YouTube metadata (Find the Italian Brainrot Content) ---
         youtube_titles = [
-            "Find the Italian Brainrot: Can You See It? 🇮🇹🧠",
+            "Find the Italian Brainrot: Can You See It? 🧠",
             "Where's the Italian Brainrot? (Challenge Edition)",
             "Spot the Italian Brainrot: Extreme Edition!",
             "I Found the Italian Brainrot... And It's Wild!",
@@ -202,7 +202,7 @@ def main():
 ]
 
         youtube_description = (
-            "Welcome to the ultimate **'Find the Italian Brainrot'** challenge! 🧠🇮🇹\n"
+            "'Find the Italian Brainrot'** challenge! 🧠🇮🇹\n"
             "In this video, we're putting your brainrot-spotting skills to the test. "
             "Can you find all the absurd, nonsensical, and hilariously bizarre elements, "
             "including characters like **Trabaldo, Ranaldo, Tralalero, and Bombardiro Crocodilo**, "
