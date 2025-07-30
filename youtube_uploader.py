@@ -1,5 +1,6 @@
 import cloudinary
 import cloudinary.api
+import cloudinary.uploader # Import uploader for the destroy method
 import random
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -125,11 +126,13 @@ def upload_video_to_youtube(youtube_service, video_file_path, title, description
     response = insert_request.execute()
     print(f"Video successfully uploaded! Video ID: {response.get('id')}")
     print(f"YouTube URL: http://youtube.com/watch?v={response.get('id')}") # Corrected YouTube URL
+    return response.get('id') # Return video ID for potential use
 
 def main():
     """
     Main function jo Cloudinary se video fetch karke YouTube par upload karti hai.
     """
+    local_video_filename = None # Initialize to None for cleanup in case of early error
     try:
         print("Fetching videos from Cloudinary 'For_Youtube_Videos/' folder...")
         # Make sure the prefix matches your Cloudinary folder name
@@ -181,25 +184,25 @@ def main():
         youtube_title = random.choice(youtube_titles)
 
         youtube_tags = [
-    "brainrot",
-    "italian brainrot",
-    "find the italian brainrot",
-    "spot the brainrot",
-    "tralalero",
-    "bombardiro",
-    "bombardiro crocodilo",
-    "tung tung tung sahur", # Adopted into Italian Brainrot
-    "trabaldo",
-    "ranaldo",
-    "lirili larila",
-    "la vaca saturno saturnita",
-    "frigo camelo",
-    "bobrito bandito",
-    "blueberrini octopussini",
-    "boneca ambalabu",
-    "bananita dolphinita",
-    "cabrospaghetti mistico"
-]
+            "brainrot",
+            "italian brainrot",
+            "find the italian brainrot",
+            "spot the brainrot",
+            "tralalero",
+            "bombardiro",
+            "bombardiro crocodilo",
+            "tung tung tung sahur", # Adopted into Italian Brainrot
+            "trabaldo",
+            "ranaldo",
+            "lirili larila",
+            "la vaca saturno saturnita",
+            "frigo camelo",
+            "bobrito bandito",
+            "blueberrini octopussini",
+            "boneca ambalabu",
+            "bananita dolphinita",
+            "cabrospaghetti mistico"
+        ]
 
         youtube_description = (
             "'Find the Italian Brainrot'** challenge! 🧠🇮🇹\n"
@@ -220,12 +223,22 @@ def main():
         youtube_service = get_authenticated_service()
         upload_video_to_youtube(youtube_service, local_video_filename, youtube_title, youtube_description, youtube_tags)
 
-        # 5. Local video file ko delete karein (cleanup)
-        os.remove(local_video_filename)
-        print(f"Temporary local file deleted: {local_video_filename}")
+        # 5. Cloudinary se video delete karein
+        print(f"Deleting video from Cloudinary: {video_public_id}...")
+        cloudinary.uploader.destroy(video_public_id, resource_type="video")
+        print(f"Video successfully deleted from Cloudinary: {video_public_id}")
+
+        # 6. Local video file ko delete karein (cleanup)
+        if local_video_filename and os.path.exists(local_video_filename):
+            os.remove(local_video_filename)
+            print(f"Temporary local file deleted: {local_video_filename}")
 
     except Exception as e:
         print(f"Ek error aa gaya: {e}")
+        # Ensure local file is cleaned up even if an error occurs during YouTube upload
+        if local_video_filename and os.path.exists(local_video_filename):
+            os.remove(local_video_filename)
+            print(f"Temporary local file deleted after error: {local_video_filename}")
         raise # Error hone par GitHub Action job ko fail karein
 
 if __name__ == "__main__":
