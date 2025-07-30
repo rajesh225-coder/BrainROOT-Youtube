@@ -20,7 +20,7 @@ cloudinary.config(
 
 # --- YouTube API Configuration ---
 # GitHub Actions par client_secret.json file ko dynamically banayenge
-CLIENT_SECRETS_FILE = "client_secret.json" 
+CLIENT_SECRETS_FILE = "client_secret.json"
 # token.pickle file GitHub Actions runner par banegi/use hogi
 TOKEN_FILE = 'token.pickle'
 
@@ -34,7 +34,7 @@ def get_authenticated_service():
     GitHub Actions environment mein refresh token ka upyog karta hai.
     """
     credentials = None
-    
+
     # Koshish karein ki token.pickle se credentials load ho jayein
     if os.path.exists(TOKEN_FILE):
         try:
@@ -56,20 +56,20 @@ def get_authenticated_service():
             except Exception as e:
                 print(f"Error refreshing token: {e}. Full re-authentication needed.")
                 credentials = None # Refresh fail hone par naya auth flow
-        
-        # Agar credentials abhi bhi nahi hain (ya refresh fail ho gaya)
+
+        # Agar credentials abhi bhi nahi hain (ya refresh ho gaya)
         if not credentials:
             print("No valid credentials found or refresh token failed. Initiating authorization flow from secret...")
-            
+
             # GOOGLE_REFRESH_TOKEN secret se refresh token use karein
             refresh_token_secret = os.environ.get("GOOGLE_REFRESH_TOKEN")
             if not refresh_token_secret:
                 raise ValueError("GOOGLE_REFRESH_TOKEN GitHub Secret is missing or empty.")
-            
+
             try:
                 with open(CLIENT_SECRETS_FILE, 'r') as f:
                     client_config = json.load(f)
-                
+
                 web_config = client_config.get("web") or client_config.get("installed")
                 if not web_config:
                     raise ValueError("client_secret.json must contain 'web' or 'installed' client configuration.")
@@ -82,7 +82,7 @@ def get_authenticated_service():
                     client_secret=web_config.get("client_secret"),
                     scopes=SCOPES
                 )
-                
+
                 # Turant ek valid access token prapt karne ke liye refresh karein
                 credentials.refresh(Request())
                 print("Initial credentials created and refreshed using GOOGLE_REFRESH_TOKEN secret.")
@@ -91,12 +91,12 @@ def get_authenticated_service():
                 print(f"FATAL: Could not establish credentials using GOOGLE_REFRESH_TOKEN secret: {e}")
                 print("Please ensure GOOGLE_REFRESH_TOKEN and GOOGLE_CLIENT_SECRETS are correctly set in GitHub Secrets.")
                 raise # Error hone par workflow ko fail karein
-                
+
     # Credentials ko save karein future ke runs ke liye
     with open(TOKEN_FILE, 'wb') as token:
         pickle.dump(credentials, token)
     print(f"Credentials saved/updated to {TOKEN_FILE}.")
-            
+
     return googleapiclient.discovery.build(
         API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
@@ -109,7 +109,7 @@ def upload_video_to_youtube(youtube_service, video_file_path, title, description
             "title": title,
             "description": description,
             "tags": tags,
-            "categoryId": "22" # Video category ID (e.g., 22 for People & Blogs)
+            "categoryId": "22" # Video category ID (e.g., 22 for People & Blogs, or change if needed)
         },
         "status": {
             "privacyStatus": "public" # public, private, ya unlisted
@@ -124,7 +124,7 @@ def upload_video_to_youtube(youtube_service, video_file_path, title, description
     )
     response = insert_request.execute()
     print(f"Video successfully uploaded! Video ID: {response.get('id')}")
-    print(f"YouTube URL: https://www.youtube.com/watch?v={response.get('id')}") # Corrected YouTube URL
+    print(f"YouTube URL: http://youtube.com/watch?v={response.get('id')}") # Corrected YouTube URL
 
 def main():
     """
@@ -132,14 +132,15 @@ def main():
     """
     try:
         print("Fetching videos from Cloudinary 'For_Youtube_Videos/' folder...")
+        # Make sure the prefix matches your Cloudinary folder name
         result = cloudinary.api.resources(
             type='upload',
             resource_type='video',
-            prefix='Motivation/',
+            prefix='BrainRot/', # If your videos are in a specific folder, e.g., 'For_Youtube_Videos/'
             max_results=500
         )
         videos = result.get('resources', [])
-        
+
         if not videos:
             print("Cloudinary 'For_Youtube_Videos/' folder mein koi video nahi mili.")
             return
@@ -151,10 +152,11 @@ def main():
 
         local_video_filename = f"{video_public_id.split('/')[-1]}"
         if not local_video_filename.lower().endswith(('.mp4', '.mov', '.avi', '.webm')):
-            local_video_filename += '.mp4' 
+            # Add a default extension if none is present or recognized
+            local_video_filename += '.mp4'
 
         print(f"Downloading video to {local_video_filename}...")
-        
+
         with requests.get(video_url, stream=True) as r:
             r.raise_for_status()
             with open(local_video_filename, 'wb') as f:
@@ -162,41 +164,49 @@ def main():
                     f.write(chunk)
         print("Video download complete.")
 
-        # --- YouTube metadata (Motivational Content) ---
-        motivational_titles = [
-            "Unleash Your Inner Power: A Motivational Journey!",
-            "Believe in Yourself: The Path to Success Starts Now!",
-            "Never Give Up: Find Your Drive & Conquer Your Goals!",
-            "Daily Dose of Motivation: Fuel Your Dreams!",
-            "Inspire Your Day: Positive Vibes & Strong Mindset!",
-            "Push Your Limits: Transform Your Life Today!",
-            "The Power of Positive Thinking: Achieve Anything!",
-            "Wake Up & Win: Your Morning Motivation Boost!",
-            "Success Mindset: Build Your Empire!",
-            "Stay Focused, Stay Strong: Your Ultimate Motivation!"
+        # --- YouTube metadata (Find the Italian Brainrot Content) ---
+        youtube_titles = [
+            "Find the Italian Brainrot: Can You See It? 🇮🇹🧠",
+            "Where's the Italian Brainrot? (Challenge Edition)",
+            "Spot the Italian Brainrot: Extreme Edition!",
+            "I Found the Italian Brainrot... And It's Wild!",
+            "Can YOU Find the Italian Brainrot in This Video?",
+            "Hidden Italian Brainrot: A Visual Hunt!",
+            "The Great Italian Brainrot Search!",
+            "Find the Italian Brainrot: Impossible Difficulty!",
+            "Join Me to Find the Italian Brainrot!",
+            "Find the Italian Brainrot: My Mind is Melting!"
         ]
-        
-        youtube_title = random.choice(motivational_titles) 
+
+        youtube_title = random.choice(youtube_titles)
+
+        youtube_tags = [
+            "find the italian brainrot", "italian brainrot", "brainrot", "italian memes",
+            "spot the brainrot", "meme hunt", "absurd humor", "internet memes",
+            "dank memes", "funny memes", "weird internet", "nonsensical",
+            "viral memes", "try not to laugh", "schizoposting", "tralalero",
+            "bombardiro", "dopamine dump", "internet culture", "gen z memes",
+            "tiktok memes", "cursed video", "italian", "humor", "challenge",
+            # --- Italian Brainrot Character Names ---
+            "Trabaldo", "Ranaldo", "Tralalero", "Bombardiro Crocodilo", "Tung Tung Tung Sahur",
+            "Giovanni", "Spaghetti", "Pasta", "Mario", "Luigi", # Common Italian-sounding names used in memes
+            "Gigi", "Rocco", "Peppino", "Vincenzo", "Antonio"
+        ]
 
         youtube_description = (
-            "Welcome to our channel! This video is designed to ignite your inner fire and keep you motivated on your journey to success. "
-            "Remember, every challenge is an opportunity in disguise. Believe in yourself, stay consistent, and never stop chasing your dreams.\n\n"
-            "If you found this video inspiring, please like, share, and subscribe for more motivational content!\n\n"
-
+            "Welcome to the ultimate **'Find the Italian Brainrot'** challenge! 🧠🇮🇹\n"
+            "In this video, we're putting your brainrot-spotting skills to the test. "
+            "Can you find all the absurd, nonsensical, and hilariously bizarre elements, "
+            "including characters like **Trabaldo, Ranaldo, Tralalero, and Bombardiro Crocodilo**, "
+            "that make up the unique world of Italian Brainrot?\n\n"
+            "Watch closely, because some of these are tricky! "
+            "Let me know in the comments how many you found or if your brain broke trying! "
+            "Don't forget to like, subscribe, and hit the notification bell for more brain-bending content! 👇\n\n"
             "I do not claim ownership of the background music used in this video. All rights belong to their respective owners. "
-            "This video is for motivational and entertainment purposes only.\n\n"
-
-            "--- Searching Tags --- \n"
-            "#Motivation #Inspiration #Success #BelieveInYourself #NeverGiveUp #PositiveVibes #Mindset #GoalSetting #DreamBig #SelfImprovement #MotivationalVideo #LifeHacks #Productivity #StayStrong #AchieveGoals #DailyMotivation #FitnessMotivation #StudyMotivation #WorkMotivation #InspirationalQuotes #Focus"
+            "This video is for entertainment purposes only.\n\n"
+            "--- Top Tags for this Brainrot ---\n"
+            "#findtheitalianbrainrot #italianbrainrot #brainrot #italianmemes #spotthebrainrot #memehunt #absurdhumor #internetmemes #dankmemes #funnymemes #weirdinternet #nonsensical #viralmemes #trynottolaugh #schizoposting #tralalero #bombardiro #dopaminedump #internetculture #genzmemes #tiktokmemes #cursedvideo #italian #humor #challenge #Trabaldo #Ranaldo #Tralalero #BombardiroCrocodilo #TungTungTungSahur #Giovanni #Spaghetti #Pasta #Mario #Luigi #Gigi #Rocco #Peppino #Vincenzo #Antonio"
         )
-        
-        youtube_tags = [
-            "motivation", "inspiration", "success", "believe in yourself", 
-            "never give up", "positive vibes", "mindset", "goal setting", 
-            "dream big", "self improvement", "motivational video", 
-            "daily motivation", "inspirational quotes", "focus",
-            "personal growth", "achieve goals", "productivity tips"
-        ]
 
         # 4. YouTube ke saath authenticate karein aur video upload karein
         youtube_service = get_authenticated_service()
