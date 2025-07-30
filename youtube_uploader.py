@@ -181,17 +181,25 @@ def main():
         youtube_title = random.choice(youtube_titles)
 
         youtube_tags = [
-            "find the italian brainrot", "italian brainrot", "brainrot", "italian memes",
-            "spot the brainrot", "meme hunt", "absurd humor", "internet memes",
-            "dank memes", "funny memes", "weird internet", "nonsensical",
-            "viral memes", "try not to laugh", "schizoposting", "tralalero",
-            "bombardiro", "dopamine dump", "internet culture", "gen z memes",
-            "tiktok memes", "cursed video", "italian", "humor", "challenge",
-            # --- Italian Brainrot Character Names ---
-            "Trabaldo", "Ranaldo", "Tralalero", "Bombardiro Crocodilo", "Tung Tung Tung Sahur",
-            "Giovanni", "Spaghetti", "Pasta", "Mario", "Luigi", # Common Italian-sounding names used in memes
-            "Gigi", "Rocco", "Peppino", "Vincenzo", "Antonio"
-        ]
+    "brainrot",
+    "italian brainrot",
+    "find the italian brainrot",
+    "spot the brainrot",
+    "tralalero",
+    "bombardiro",
+    "bombardiro crocodilo",
+    "tung tung tung sahur", # Adopted into Italian Brainrot
+    "trabaldo",
+    "ranaldo",
+    "lirili larila",
+    "la vaca saturno saturnita",
+    "frigo camelo",
+    "bobrito bandito",
+    "blueberrini octopussini",
+    "boneca ambalabu",
+    "bananita dolphinita",
+    "cabrospaghetti mistico"
+]
 
         youtube_description = (
             "Welcome to the ultimate **'Find the Italian Brainrot'** challenge! 🧠🇮🇹\n"
