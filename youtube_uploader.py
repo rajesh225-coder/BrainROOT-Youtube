@@ -139,7 +139,7 @@ def main():
         result = cloudinary.api.resources(
             type='upload',
             resource_type='video',
-            prefix='BrainRot/', # If your videos are in a specific folder, e.g., 'For_Youtube_Videos/'
+            prefix='BrainRot2/', # If your videos are in a specific folder, e.g., 'For_Youtube_Videos/'
             max_results=500
         )
         videos = result.get('resources', [])
