@@ -139,7 +139,7 @@ def main():
         result = cloudinary.api.resources(
             type='upload',
             resource_type='video',
-            prefix='BrainRot2/', # If your videos are in a specific folder, e.g., 'For_Youtube_Videos/'
+            prefix='BrainRot3/', # If your videos are in a specific folder, e.g., 'For_Youtube_Videos/'
             max_results=500
         )
         videos = result.get('resources', [])
@@ -169,21 +169,18 @@ def main():
 
         # --- YouTube metadata (Find the Italian Brainrot Content) ---
         youtube_titles = [
-            "Find the Italian Brainrot: Can You See It? 🧠  #김프로 #유백합",
-            "Where's the Italian Brainrot? (Challenge Edition)  #김프로 #유백합",
-            "Spot the Italian Brainrot: Extreme Edition!  #김프로 #유백합",
-            "I Found the Italian Brainrot... And It's Wild!  #김프로 #유백합",
-            "Can YOU Find the Italian Brainrot in This Video?  #김프로 #유백합",
-            "Hidden Italian Brainrot: A Visual Hunt! #김프로 #유백합",
-            "The Great Italian Brainrot Search! #김프로 #유백합",
-            "Find the Italian Brainrot: Impossible Difficulty! #김프로 #유백합",
-            "Join Me to Find the Italian Brainrot! #김프로 #유백합",
-            "Find the Italian Brainrot: My Mind is Melting! #김프로 #유백합"
+            "Can YOU Guess the Correct Italian Brainrot Character? 🧠 (Quiz Challenge)",
+    "Only 1% Can Spot the REAL Italian Brainrot Character! 👀 | Meme Quiz",
+    "Test Your Brainrot Level! 🇮🇹 | Italian Character Quiz",
+    "Which Character is REAL? | Italian Brainrot Guessing Game",
+    "99% FAIL This Italian Brainrot Quiz! (Impossible Edition)"
+
         ]
 
         youtube_title = random.choice(youtube_titles)
 
         youtube_tags = [
+            "quiz",
             "brainrot",
             "italian brainrot",
             "find the italian brainrot",
@@ -205,18 +202,24 @@ def main():
         ]
 
         youtube_description = (
-            "'Find the Italian Brainrot'** challenge! 🧠🇮🇹\n"
-            "In this video, we're putting your brainrot-spotting skills to the test. "
-            "Can you find all the absurd, nonsensical, and hilariously bizarre elements, "
-            "including characters like **Trabaldo, Ranaldo, Tralalero, and Bombardiro Crocodilo**, "
-            "that make up the unique world of Italian Brainrot?\n\n"
-            "Watch closely, because some of these are tricky! "
-            "Let me know in the comments how many you found or if your brain broke trying! "
-            "Don't forget to like, subscribe, and hit the notification bell for more brain-bending content! 👇\n\n"
-            "I do not claim ownership of the background music used in this video. All rights belong to their respective owners. "
-            "This video is for entertainment purposes only.\n\n"
-            "--- Top Tags for this Brainrot ---\n"
-            "#findtheitalianbrainrot #italianbrainrot #brainrot #italianmemes #spotthebrainrot #memehunt #absurdhumor #internetmemes #dankmemes #funnymemes #weirdinternet #nonsensical #viralmemes #trynottolaugh #schizoposting #tralalero #bombardiro #dopaminedump #internetculture #genzmemes #tiktokmemes #cursedvideo #italian #humor #challenge #Trabaldo #Ranaldo #Tralalero #BombardiroCrocodilo #TungTungTungSahur #Giovanni #Spaghetti #Pasta #Mario #Luigi #Gigi #Rocco #Peppino #Vincenzo #Antonio"
+            youtube_description = """
+Think you're an expert on Italian Brainrot? Put your skills to the test! 🧠🇮🇹
+
+In this quiz, you'll be shown four images, but only ONE is the real character. Your mission is to find the legends of Italian Brainrot, including:
+**Trabaldo, Ranaldo, Tralalero, Bombardiro Crocodilo, Frigo Camelo, Bobrito Bandito, Blueberrini Octopussini, La Vaca Saturno Saturnita, Bananita Dolphinita, Boneca Ambalabu, Cabrospaghetti Mistico**, and many more!
+
+Can you spot the real one before the time runs out?
+
+Let me know your score in the comments below! How many did you guess correctly? 👇
+
+If you enjoyed this brain-melting challenge, don't forget to LIKE and SUBSCRIBE for more!
+
+---
+All background content is used for entertainment purposes only. All rights belong to their respective owners.
+---
+
+#italianbrainrot #quiz #memequiz #guessthecharacter #brainrot #challenge #trabaldo #bombardiro #ranaldo #spotthecharacter #funnymemes #internetmemes #memes
+"""
         )
 
         # 4. YouTube ke saath authenticate karein aur video upload karein
