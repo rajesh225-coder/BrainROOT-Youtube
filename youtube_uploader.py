@@ -201,8 +201,7 @@ def main():
             "cabrospaghetti mistico"
         ]
 
-        youtube_description = (
-            youtube_description = """
+        youtube_description = """
 Think you're an expert on Italian Brainrot? Put your skills to the test! 🧠🇮🇹
 
 In this quiz, you'll be shown four images, but only ONE is the real character. Your mission is to find the legends of Italian Brainrot, including:
