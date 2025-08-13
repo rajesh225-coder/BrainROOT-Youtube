@@ -219,7 +219,7 @@ All background content is used for entertainment purposes only. All rights belon
 
 #italianbrainrot #quiz #memequiz #guessthecharacter #brainrot #challenge #trabaldo #bombardiro #ranaldo #spotthecharacter #funnymemes #internetmemes #memes
 """
-        )
+        
 
         # 4. YouTube ke saath authenticate karein aur video upload karein
         youtube_service = get_authenticated_service()
